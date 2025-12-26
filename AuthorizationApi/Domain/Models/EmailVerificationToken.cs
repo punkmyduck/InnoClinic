@@ -42,5 +42,7 @@ namespace AuthorizationApi.Domain.Models
 
             IsUsed = true;
         }
+
+        public bool IsExpired(DateTime now) => now >= ExpiresAt;
     }
 }
