@@ -1,8 +1,11 @@
 <Solution>
+  <Folder Name="/Элементы решения/">
+    <File Path=".gitignore" />
+    <File Path="docker-compose.yml" />
+  </Folder>
   <Project Path="AppointmentsApi/AppointmentsApi.csproj" Id="21690c3a-858b-4124-9339-b37042c61578" />
   <Project Path="AuthorizationApi/AuthorizationApi.csproj" Id="cae9784f-d06e-483a-8dab-224e20580653" />
   <Project Path="DocumentsApi/DocumentsApi.csproj" Id="a9a1fd04-b301-4030-9454-9e7963e3e9d9" />
-  <Project Path="Domain/Domain.csproj" />
   <Project Path="GatewayApi/GatewayApi.csproj" Id="83d9f90c-b28e-42e7-bb53-f43adad9e014" />
   <Project Path="OfficesApi/OfficesApi.csproj" Id="13895c91-b359-41a6-91bb-3c13c043d720" />
   <Project Path="ProfilesApi/ProfilesApi.csproj" Id="bdbfbb7d-260a-49c0-bb65-36452bfbc158" />
