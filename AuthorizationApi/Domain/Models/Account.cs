@@ -43,7 +43,7 @@ namespace AuthorizationApi.Domain.Models
                 passwordHash,
                 phoneNumber,
                 false,
-                new AuditInfo(createdAt, createdBy.ToString(), null, null));
+                new AuditInfo(createdAt, createdBy, null, null));
         }
 
         public void VerifyEmail(Guid verifiedBy, DateTime verifiedAt)
@@ -52,7 +52,7 @@ namespace AuthorizationApi.Domain.Models
                 throw new EmailAlreadyVerifiedException($"User's {Id} email {Email} already verified");
 
             IsEmailVerified = true;
-            AuditInfo = AuditInfo.WithUpdate(verifiedAt, verifiedBy.ToString());
+            AuditInfo = AuditInfo.WithUpdate(verifiedAt, verifiedBy);
         }
     }
 }
