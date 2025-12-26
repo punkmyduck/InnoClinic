@@ -7,9 +7,9 @@ namespace AuthorizationApi.Domain.Models
     {
         public AccountId Id { get; }
 
-        public Email Email { get; }
-        public PasswordHash PasswordHash { get; }
-        public PhoneNumber? PhoneNumber { get; }
+        public Email Email { get; private set; }
+        public PasswordHash PasswordHash { get; private set; }
+        public PhoneNumber? PhoneNumber { get; private set; }
         public bool IsEmailVerified { get; private set; }
         public AuditInfo AuditInfo { get; private set; }
 
@@ -53,6 +53,25 @@ namespace AuthorizationApi.Domain.Models
 
             IsEmailVerified = true;
             AuditInfo = AuditInfo.WithUpdate(verifiedAt, verifiedBy);
+        }
+
+        public void ChangePassword(PasswordHash newHash, DateTime changedAt, Guid changedBy)
+        {
+            PasswordHash = newHash;
+            AuditInfo = AuditInfo.WithUpdate(changedAt, changedBy);
+        }
+
+        public void ChangeEmail(Email newEmail, bool isNewEmailVerified, DateTime changedAt, Guid changedBy)
+        {
+            Email = newEmail;
+            IsEmailVerified = isNewEmailVerified;
+            AuditInfo = AuditInfo.WithUpdate(changedAt, changedBy);
+        }
+
+        public void ChangePhoneNumber(PhoneNumber newPhoneNumber, DateTime changedAt, Guid changedBy)
+        {
+            PhoneNumber = newPhoneNumber;
+            AuditInfo = AuditInfo.WithUpdate(changedAt, changedBy);
         }
     }
 }
