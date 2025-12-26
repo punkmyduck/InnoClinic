@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace AuthorizationApi.Domain.Exceptions
 {
-    public class EmailAlreadyVerifiedException : Exception
+    public class EmailAlreadyVerifiedException : DomainException
     {
         public EmailAlreadyVerifiedException() { }
 
