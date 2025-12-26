@@ -1,10 +1,11 @@
 ﻿using AuthorizationApi.Domain.Models;
 using AuthorizationApi.Domain.Repositories;
 using AuthorizationApi.Domain.ValueObjects;
+using AuthorizationApi.Infrastructure.Mappers;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuthorizationApi.Infrastructure.Repositories
 {
-    //TODO: implement repository methods
     public class AccountRepository : IAccountRepository
     {
         private AuthDbContext _context;
@@ -12,14 +13,18 @@ namespace AuthorizationApi.Infrastructure.Repositories
         {
             _context = context;
         }
-        public Task AddAsync(Account account)
+        public async Task AddAsync(Account account)
         {
-            throw new NotImplementedException();
+            var entity = AccountMapper.ToEntity(account);
+            await _context.Accounts.AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<Account?> GetByEmailAsync(Email email)
+        public async Task<Account?> GetByEmailAsync(Email email)
         {
-            throw new NotImplementedException();
+            var entity = await _context.Accounts.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email.Value);
+            if (entity is null) return null;
+            return AccountMapper.ToDomain(entity);
         }
     }
 }
