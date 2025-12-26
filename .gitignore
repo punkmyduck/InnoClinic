@@ -4,6 +4,7 @@
 
 #My added specific files
 *Development.json
+*TestController.cs
 
 # Logs
 Logs/
