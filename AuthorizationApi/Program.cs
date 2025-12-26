@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
+using AuthorizationApi.Infrastructure;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuthorizationApi
 {
@@ -16,6 +18,11 @@ namespace AuthorizationApi
             builder.Services.AddOpenApi();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            //Db services
+            builder.Services.AddDbContext<AuthDbContext>(options =>
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("AuthDb")));
 
             var app = builder.Build();
 
