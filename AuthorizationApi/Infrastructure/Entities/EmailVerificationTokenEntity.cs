@@ -1,6 +1,6 @@
 ﻿namespace AuthorizationApi.Infrastructure.Entities
 {
-    public class EmailVerificationToken
+    public class EmailVerificationTokenEntity
     {
         public Guid Id { get; set; }
         public Guid AccountId { get; set; }
