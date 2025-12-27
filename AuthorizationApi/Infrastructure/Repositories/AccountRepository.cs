@@ -1,5 +1,4 @@
 ﻿using AuthorizationApi.Domain.Models;
-using AuthorizationApi.Domain.Repositories;
 using AuthorizationApi.Domain.ValueObjects;
 using AuthorizationApi.Infrastructure.Mappers;
 using Microsoft.EntityFrameworkCore;

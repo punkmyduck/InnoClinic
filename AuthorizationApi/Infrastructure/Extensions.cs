@@ -1,5 +1,4 @@
-﻿using AuthorizationApi.Domain.Repositories;
-using AuthorizationApi.Infrastructure.Repositories;
+﻿using AuthorizationApi.Infrastructure.Repositories;
 
 namespace AuthorizationApi.Infrastructure
 {

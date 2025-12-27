@@ -1,7 +1,7 @@
 ﻿using AuthorizationApi.Domain.Models;
 using AuthorizationApi.Domain.ValueObjects;
 
-namespace AuthorizationApi.Domain.Repositories
+namespace AuthorizationApi.Infrastructure.Repositories
 {
     public interface IAccountRepository
     {
