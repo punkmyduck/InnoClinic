@@ -5,7 +5,8 @@ namespace AuthorizationApi.Application.Interfaces
 {
     public interface IAccountRepository
     {
-        Task<Account?> GetByEmailAsync(Email email);
-        Task AddAsync(Account account);
+        Task<bool> ExistsByEmailAsync(Email email, CancellationToken cancellationToken);
+        Task<Account?> GetByEmailAsync(Email email, CancellationToken cancellationToken);
+        Task AddAsync(Account account, CancellationToken cancellationToken);
     }
 }

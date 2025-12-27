@@ -13,16 +13,25 @@ namespace AuthorizationApi.Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task AddAsync(Account account)
+        public async Task AddAsync(Account account, CancellationToken cancellationToken)
         {
             var entity = AccountMapper.ToEntity(account);
-            await _context.Accounts.AddAsync(entity);
-            await _context.SaveChangesAsync();
+            await _context.Accounts.AddAsync(entity, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<Account?> GetByEmailAsync(Email email)
+        public async Task<bool> ExistsByEmailAsync(Email email, CancellationToken cancellationToken)
         {
-            var entity = await _context.Accounts.AsNoTracking().FirstOrDefaultAsync(x => x.Email == email.Value);
+            return await _context.Accounts
+                .AsNoTracking()
+                .AnyAsync(x => x.Email == email.Value, cancellationToken);
+        }
+
+        public async Task<Account?> GetByEmailAsync(Email email, CancellationToken cancellationToken)
+        {
+            var entity = await _context.Accounts
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Email == email.Value, cancellationToken);
             if (entity is null) return null;
             return AccountMapper.ToDomain(entity);
         }
