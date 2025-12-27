@@ -1,6 +1,5 @@
-using System.Threading.Tasks;
+using AuthorizationApi.Application;
 using AuthorizationApi.Infrastructure;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuthorizationApi
@@ -14,6 +13,8 @@ namespace AuthorizationApi
             // Add services to the container.
             //Infrastructure Layer
             builder.Services.AddInfrastructureLayer();
+            //Application Layer
+            builder.Services.AddApplicationLayer();
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

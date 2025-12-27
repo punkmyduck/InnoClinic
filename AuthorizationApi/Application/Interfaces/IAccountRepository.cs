@@ -1,0 +1,12 @@
+﻿using AuthorizationApi.Domain.Models;
+using AuthorizationApi.Domain.ValueObjects;
+
+namespace AuthorizationApi.Application.Interfaces
+{
+    public interface IAccountRepository
+    {
+        Task<bool> ExistsByEmailAsync(Email email, CancellationToken cancellationToken);
+        Task<Account?> GetByEmailAsync(Email email, CancellationToken cancellationToken);
+        Task AddAsync(Account account, CancellationToken cancellationToken);
+    }
+}

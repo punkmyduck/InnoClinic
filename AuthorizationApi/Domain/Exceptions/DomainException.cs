@@ -1,6 +1,6 @@
 ﻿namespace AuthorizationApi.Domain.Exceptions
 {
-    public class DomainException : Exception
+    public abstract class DomainException : Exception
     {
         public DomainException() { }
 
