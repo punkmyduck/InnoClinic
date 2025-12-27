@@ -23,7 +23,6 @@ namespace AuthorizationApi.Infrastructure.Repositories
         public async Task<bool> ExistsByEmailAsync(Email email, CancellationToken cancellationToken)
         {
             return await _context.Accounts
-                .AsNoTracking()
                 .AnyAsync(x => x.Email == email.Value, cancellationToken);
         }
 
