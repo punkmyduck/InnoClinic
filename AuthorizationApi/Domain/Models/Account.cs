@@ -29,13 +29,13 @@ namespace AuthorizationApi.Domain.Models
             AuditInfo = audit;
         }
 
-        public Account Create(
+        public static Account Create(
             AccountId id,
             Email email,
             PasswordHash passwordHash,
             PhoneNumber? phoneNumber,
             DateTime createdAt,
-            Guid createdBy)
+            AccountId createdBy)
         {
             return new Account(
                 id,
@@ -43,7 +43,7 @@ namespace AuthorizationApi.Domain.Models
                 passwordHash,
                 phoneNumber,
                 false,
-                new AuditInfo(createdAt, createdBy, null, null));
+                new AuditInfo(createdAt, createdBy.Value, null, null));
         }
 
         public void VerifyEmail(Guid verifiedBy, DateTime verifiedAt)
