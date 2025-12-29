@@ -16,8 +16,8 @@ namespace AuthorizationApi.Infrastructure.Repositories
         public async Task AddAsync(Account account, CancellationToken cancellationToken)
         {
             var entity = AccountMapper.ToEntity(account);
-            await _context.Accounts.AddAsync(entity, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
+            _context.Accounts.Add(entity);
+            await Task.CompletedTask;
         }
 
         public async Task<bool> ExistsByEmailAsync(Email email, CancellationToken cancellationToken)
