@@ -2,7 +2,7 @@
 
 namespace AuthorizationApi.Infrastructure.Security
 {
-    public class BCryptPasswordHashed : IPasswordHasher
+    public class BCryptPasswordHasher : IPasswordHasher
     {
         public string GenerateHash(string password)
         {
