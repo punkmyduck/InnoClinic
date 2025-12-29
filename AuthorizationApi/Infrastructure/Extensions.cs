@@ -1,6 +1,7 @@
 ﻿using AuthorizationApi.Application.Interfaces;
 using AuthorizationApi.Infrastructure.Repositories;
 using AuthorizationApi.Infrastructure.Security;
+using AuthorizationApi.Infrastructure.UnitOfWork;
 
 namespace AuthorizationApi.Infrastructure
 {
@@ -10,6 +11,9 @@ namespace AuthorizationApi.Infrastructure
         {
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddTransient<IPasswordPolicy, DefaultPasswordPolicy>();
+            services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
+            services.AddTransient<ITokenHashGenerator, Sha256TokenHashGenerator>();
+            services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         }
     }
 }
