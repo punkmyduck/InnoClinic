@@ -10,9 +10,9 @@ namespace AuthorizationApi.Infrastructure
         public static void AddInfrastructureLayer(this IServiceCollection services)
         {
             services.AddScoped<IAccountRepository, AccountRepository>();
-            services.AddTransient<IPasswordPolicy, DefaultPasswordPolicy>();
-            services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
-            services.AddTransient<ITokenHashGenerator, Sha256TokenHashGenerator>();
+            services.AddSingleton<IPasswordPolicy, DefaultPasswordPolicy>();
+            services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
+            services.AddSingleton<ITokenHashGenerator, Sha256TokenHashGenerator>();
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         }
     }
