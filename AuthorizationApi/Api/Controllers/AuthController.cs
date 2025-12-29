@@ -29,7 +29,7 @@ namespace AuthorizationApi.Api.Controllers
 
             var result = await _registerHandler.HandleAsync(command, cancellationToken);
 
-            return CreatedAtAction(nameof(Register), new RegisterResponseDto(result.AccountId, true));
+            return CreatedAtAction(nameof(Register), new RegisterResponseDto(result.AccountId, result.IsEmailVerificationRequired));
         }
 
         [HttpGet("signin")]

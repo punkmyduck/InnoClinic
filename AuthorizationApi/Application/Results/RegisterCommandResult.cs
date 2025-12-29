@@ -5,9 +5,11 @@ namespace AuthorizationApi.Application.Results
     public class RegisterCommandResult : ICommandResult
     {
         public Guid AccountId { get; }
-        public RegisterCommandResult(Guid accountId)
+        public bool IsEmailVerificationRequired { get; }
+        public RegisterCommandResult(Guid accountId, bool isEmailVerificationRequired)
         {
             AccountId = accountId;
+            IsEmailVerificationRequired = isEmailVerificationRequired;
         }
     }
 }

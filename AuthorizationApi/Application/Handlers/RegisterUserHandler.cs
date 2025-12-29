@@ -72,7 +72,7 @@ namespace AuthorizationApi.Application.Handlers
 
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return new RegisterCommandResult(newAccount.Id.Value);
+            return new RegisterCommandResult(newAccount.Id.Value, true);
         }
     }
 }
