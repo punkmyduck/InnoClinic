@@ -10,6 +10,7 @@ namespace AuthorizationApi.Infrastructure
         public static void AddInfrastructureLayer(this IServiceCollection services)
         {
             services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IEmailVerificationTokenRepository, EmailVerificationTokenRepository>();
             services.AddSingleton<IPasswordPolicy, DefaultPasswordPolicy>();
             services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
             services.AddSingleton<ITokenHashGenerator, Sha256TokenHashGenerator>();
