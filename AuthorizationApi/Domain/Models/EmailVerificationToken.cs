@@ -12,7 +12,7 @@ namespace AuthorizationApi.Domain.Models
         public DateTime ExpiresAt { get; }
         public bool IsUsed { get; private set; }
 
-        private EmailVerificationToken(
+        internal EmailVerificationToken(
             EmailVerificationTokenId id,
             AccountId accountId,
             TokenHash tokenHash,
