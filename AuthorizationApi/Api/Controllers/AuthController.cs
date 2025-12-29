@@ -33,7 +33,7 @@ namespace AuthorizationApi.Api.Controllers
         }
 
         [HttpGet("signin")]
-        public async Task<IActionResult> SignIn()
+        public async Task<IActionResult> SignIn([FromBody] SignInRequestDto request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
