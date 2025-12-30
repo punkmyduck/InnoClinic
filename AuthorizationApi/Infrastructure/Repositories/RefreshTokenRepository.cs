@@ -24,7 +24,7 @@ namespace AuthorizationApi.Infrastructure.Repositories
         {
             var entity = await _context.RefreshTokens
                 .AsNoTracking()
-                .FirstOrDefaultAsync(r => r.AccountId == accoundId.Value);
+                .FirstOrDefaultAsync(r => r.AccountId == accoundId.Value && r.IsRevoked == false && r.ExpiresAt >= DateTime.UtcNow);
             if (entity is null) return null;
             return RefreshTokenMapper.ToDomain(entity);
         }
