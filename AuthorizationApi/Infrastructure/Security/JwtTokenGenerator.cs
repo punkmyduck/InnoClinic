@@ -2,10 +2,10 @@
 using AuthorizationApi.Application.Options;
 using AuthorizationApi.Application.ValueObjects;
 using AuthorizationApi.Domain.ValueObjects;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace AuthorizationApi.Infrastructure.Security
@@ -15,9 +15,9 @@ namespace AuthorizationApi.Infrastructure.Security
         private readonly JwtSecurityTokenHandler _handler = new();
         private readonly JwtOptions _options;
 
-        public JwtTokenGenerator(JwtOptions options)
+        public JwtTokenGenerator(IOptions<JwtOptions> options)
         {
-            _options = options;
+            _options = options.Value;
         }
         public JwtTokenResult GenerateAccessToken(IReadOnlyCollection<Claim> claims, DateTime expiresAt)
         {
