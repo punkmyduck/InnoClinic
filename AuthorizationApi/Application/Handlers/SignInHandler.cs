@@ -66,9 +66,22 @@ namespace AuthorizationApi.Application.Handlers
                 TokenHash.FromRaw(generatedRefreshToken.token, _tokenHashGenerator),
                 generatedRefreshToken.expiresAt);
 
-            _refreshTokenRepository.Add(refreshToken);
 
-            await _unitOfWork.CommitAsync(cancellationToken);
+            await _unitOfWork.BeginAsync(cancellationToken);
+            try
+            {
+                await _refreshTokenRepository
+                    .RevokeAllActiveByAccoundIdAsync(account.Id, cancellationToken);
+
+                _refreshTokenRepository.Add(refreshToken);
+
+                await _unitOfWork.CommitAsync(cancellationToken);
+            }
+            catch
+            {
+                await _unitOfWork.RollbackAsync(cancellationToken);
+                throw;
+            }
             
             return new SignInCommandResult(true, accessToken.token, accessToken.expiresAt, generatedRefreshToken.token);
         }
