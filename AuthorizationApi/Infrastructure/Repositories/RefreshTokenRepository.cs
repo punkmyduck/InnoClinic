@@ -13,19 +13,31 @@ namespace AuthorizationApi.Infrastructure.Repositories
         {
             _context = context;
         }
-        public void Add(RefreshToken refreshToken, CancellationToken cancellationToken)
+        public void Add(RefreshToken refreshToken)
         {
             var entity = RefreshTokenMapper.ToEntity(refreshToken);
             _context.RefreshTokens.Add(entity);
         }
 
-        public async Task<RefreshToken?> GetTokenByUserIdAsync(AccountId accoundId)
+        public async Task<RefreshToken?> GetTokenByUserIdAsync(AccountId accoundId, CancellationToken cancellationToken)
         {
             var entity = await _context.RefreshTokens
                 .AsNoTracking()
                 .FirstOrDefaultAsync(r => r.AccountId == accoundId.Value && r.IsRevoked == false && r.ExpiresAt >= DateTime.UtcNow);
             if (entity is null) return null;
             return RefreshTokenMapper.ToDomain(entity);
+        }
+
+        public async Task RevokeAllActiveByAccoundIdAsync(AccountId accoundId, CancellationToken cancellationToken)
+        {
+            await _context.RefreshTokens
+                .Where(r => 
+                    r.AccountId == accoundId.Value 
+                    && r.IsRevoked == false 
+                    && r.ExpiresAt > DateTime.UtcNow)
+                .ExecuteUpdateAsync(s => 
+                    s.SetProperty(r => r.IsRevoked, true),
+                    cancellationToken);
         }
     }
 }
