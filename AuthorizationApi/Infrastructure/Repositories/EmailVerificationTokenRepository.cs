@@ -11,7 +11,7 @@ namespace AuthorizationApi.Infrastructure.Repositories
         {
             _context = context;
         }
-        public void Add(EmailVerificationToken token, CancellationToken cancellationToken)
+        public void Add(EmailVerificationToken token)
         {
             var entity = EmailVerificationTokenMapper.ToEntity(token);
             _context.EmailVerificationTokens.Add(entity);

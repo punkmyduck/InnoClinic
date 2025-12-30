@@ -7,6 +7,6 @@ namespace AuthorizationApi.Application.Interfaces
     {
         Task<bool> ExistsByEmailAsync(Email email, CancellationToken cancellationToken);
         Task<Account?> GetByEmailAsync(Email email, CancellationToken cancellationToken);
-        void Add(Account account, CancellationToken cancellationToken);
+        void Add(Account account);
     }
 }

@@ -13,7 +13,7 @@ namespace AuthorizationApi.Infrastructure.Repositories
         {
             _context = context;
         }
-        public void Add(Account account, CancellationToken cancellationToken)
+        public void Add(Account account)
         {
             var entity = AccountMapper.ToEntity(account);
             _context.Accounts.Add(entity);
