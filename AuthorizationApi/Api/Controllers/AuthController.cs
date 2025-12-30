@@ -35,7 +35,7 @@ namespace AuthorizationApi.Api.Controllers
             return CreatedAtAction(nameof(Register), new RegisterResponseDto(result.AccountId, result.IsEmailVerificationRequired));
         }
 
-        [HttpGet("signin")]
+        [HttpPost("signin")]
         public async Task<IActionResult> SignIn([FromBody] SignInRequestDto request, CancellationToken cancellationToken)
         {
             var command = new SignInCommand(
