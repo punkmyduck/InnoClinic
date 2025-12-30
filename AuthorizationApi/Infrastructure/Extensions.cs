@@ -15,6 +15,7 @@ namespace AuthorizationApi.Infrastructure
             services.AddSingleton<IPasswordPolicy, DefaultPasswordPolicy>();
             services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
             services.AddSingleton<ITokenHashGenerator, Sha256TokenHashGenerator>();
+            services.AddSingleton<IRefreshTokenGenerator, RefreshTokenGenerator>();
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         }
