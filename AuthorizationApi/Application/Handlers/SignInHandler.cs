@@ -66,7 +66,7 @@ namespace AuthorizationApi.Application.Handlers
                 TokenHash.FromRaw(generatedRefreshToken.token, _tokenHashGenerator),
                 generatedRefreshToken.expiresAt);
 
-            await _refreshTokenRepository.AddAsync(refreshToken, cancellationToken);
+            _refreshTokenRepository.Add(refreshToken, cancellationToken);
 
             await _unitOfWork.CommitAsync(cancellationToken);
             
