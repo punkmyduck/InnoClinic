@@ -11,7 +11,7 @@ namespace AuthorizationApi.Domain.Models
         public DateTime ExpiresAt { get; }
         public bool IsRevoked { get; private set; }
 
-        private RefreshToken(
+        internal RefreshToken(
             RefreshTokenId id,
             AccountId accountId,
             TokenHash tokenHash,
