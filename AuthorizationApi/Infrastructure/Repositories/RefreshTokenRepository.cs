@@ -13,14 +13,13 @@ namespace AuthorizationApi.Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task AddAsync(RefreshToken refreshToken, CancellationToken cancellationToken)
+        public void Add(RefreshToken refreshToken, CancellationToken cancellationToken)
         {
             var entity = RefreshTokenMapper.ToEntity(refreshToken);
             _context.RefreshTokens.Add(entity);
-            await Task.CompletedTask;
         }
 
-        public async Task<RefreshToken?> GetTokenByUserId(AccountId accoundId)
+        public async Task<RefreshToken?> GetTokenByUserIdAsync(AccountId accoundId)
         {
             var entity = await _context.RefreshTokens
                 .AsNoTracking()

@@ -11,11 +11,10 @@ namespace AuthorizationApi.Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task AddAsync(EmailVerificationToken token, CancellationToken cancellationToken)
+        public void Add(EmailVerificationToken token, CancellationToken cancellationToken)
         {
             var entity = EmailVerificationTokenMapper.ToEntity(token);
             _context.EmailVerificationTokens.Add(entity);
-            await Task.CompletedTask;
         }
     }
 }
