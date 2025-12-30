@@ -7,6 +7,7 @@ using AuthorizationApi.Application.Results;
 using AuthorizationApi.Domain.Models;
 using AuthorizationApi.Domain.ValueObjects;
 using AuthorizationApi.Infrastructure.Security;
+using Microsoft.Extensions.Options;
 
 namespace AuthorizationApi.Application.Handlers
 {
@@ -22,7 +23,7 @@ namespace AuthorizationApi.Application.Handlers
         public SignInHandler(
             IAccountRepository accountRepository,
             IPasswordHasher passwordHasher,
-            JwtOptions options,
+            IOptions<JwtOptions> options,
             IJwtTokenGenerator jwtTokenGenerator,
             IRefreshTokenRepository refreshTokenRepository,
             IUnitOfWork unitOfWork,
@@ -30,7 +31,7 @@ namespace AuthorizationApi.Application.Handlers
         {
             _accountRepository = accountRepository;
             _passwordHasher = passwordHasher;
-            _options = options;
+            _options = options.Value;
             _jwtTokenGenerator = jwtTokenGenerator;
             _refreshTokenRepository = refreshTokenRepository;
             _unitOfWork = unitOfWork;
