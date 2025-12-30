@@ -35,11 +35,5 @@ namespace AuthorizationApi.Infrastructure.Security
                 _handler.WriteToken(token),
                 expiresAt);
         }
-
-        public JwtTokenResult GenerateRefreshToken(AccountId accountId, DateTime expiresAt)
-        {
-            var raw = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
-            return new JwtTokenResult(raw, expiresAt);
-        }
     }
 }

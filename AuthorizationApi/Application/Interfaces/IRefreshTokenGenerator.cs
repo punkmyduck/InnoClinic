@@ -1,13 +1,12 @@
 ﻿using AuthorizationApi.Application.ValueObjects;
 using AuthorizationApi.Domain.ValueObjects;
-using System.Security.Claims;
 
 namespace AuthorizationApi.Application.Interfaces
 {
-    public interface IJwtTokenGenerator
+    public interface IRefreshTokenGenerator
     {
-        JwtTokenResult GenerateAccessToken(
-            IReadOnlyCollection<Claim> claims,
+        JwtTokenResult GenerateRefreshToken(
+            AccountId accountId,
             DateTime expiresAt);
     }
 }

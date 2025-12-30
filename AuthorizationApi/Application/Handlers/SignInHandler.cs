@@ -17,6 +17,7 @@ namespace AuthorizationApi.Application.Handlers
         private readonly IPasswordHasher _passwordHasher;
         private readonly JwtOptions _options;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        private readonly IRefreshTokenGenerator _refreshTokenGenerator;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ITokenHashGenerator _tokenHashGenerator;
@@ -25,6 +26,7 @@ namespace AuthorizationApi.Application.Handlers
             IPasswordHasher passwordHasher,
             IOptions<JwtOptions> options,
             IJwtTokenGenerator jwtTokenGenerator,
+            IRefreshTokenGenerator refreshTokenGenerator,
             IRefreshTokenRepository refreshTokenRepository,
             IUnitOfWork unitOfWork,
             ITokenHashGenerator tokenHashGenerator)
@@ -33,6 +35,7 @@ namespace AuthorizationApi.Application.Handlers
             _passwordHasher = passwordHasher;
             _options = options.Value;
             _jwtTokenGenerator = jwtTokenGenerator;
+            _refreshTokenGenerator = refreshTokenGenerator;
             _refreshTokenRepository = refreshTokenRepository;
             _unitOfWork = unitOfWork;
             _tokenHashGenerator = tokenHashGenerator;
@@ -56,7 +59,7 @@ namespace AuthorizationApi.Application.Handlers
 
             var accessToken = _jwtTokenGenerator.GenerateAccessToken(claims, now.AddMinutes(30));
 
-            var generatedRefreshToken = _jwtTokenGenerator.GenerateRefreshToken(account.Id, now.AddDays(30));
+            var generatedRefreshToken = _refreshTokenGenerator.GenerateRefreshToken(account.Id, now.AddDays(30));
             var refreshToken = RefreshToken.CreateToken(
                 new RefreshTokenId(Guid.NewGuid()),
                 account.Id,
