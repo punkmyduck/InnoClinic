@@ -44,7 +44,7 @@ namespace AuthorizationApi.Api.Controllers
             
             var result = await _signInHandler.HandleAsync(command, cancellationToken);
 
-            return Ok(result);
+            return Ok(new SignInResponseDto(result.IsSuccessful, result.JwtToken, result.ExpiresAt, result.RefreshToken));
         }
     }
 }
