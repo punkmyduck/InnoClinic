@@ -11,10 +11,12 @@ namespace AuthorizationApi.Infrastructure
         {
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IEmailVerificationTokenRepository, EmailVerificationTokenRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddSingleton<IPasswordPolicy, DefaultPasswordPolicy>();
             services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
             services.AddSingleton<ITokenHashGenerator, Sha256TokenHashGenerator>();
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
         }
     }
 }

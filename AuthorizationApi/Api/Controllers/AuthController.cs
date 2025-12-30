@@ -11,11 +11,14 @@ namespace AuthorizationApi.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly ICommandHandler<RegisterCommand, RegisterCommandResult> _registerHandler;
+        private readonly ICommandHandler<SignInCommand, SignInCommandResult> _signInHandler;
         public AuthController(
-            ICommandHandler<RegisterCommand, RegisterCommandResult> registerHandler
+            ICommandHandler<RegisterCommand, RegisterCommandResult> registerHandler,
+            ICommandHandler<SignInCommand, SignInCommandResult> signInHandler
             )
         {
             _registerHandler = registerHandler;
+            _signInHandler = signInHandler;
         }
 
         [HttpPost("register")]
@@ -29,13 +32,19 @@ namespace AuthorizationApi.Api.Controllers
 
             var result = await _registerHandler.HandleAsync(command, cancellationToken);
 
-            return CreatedAtAction(nameof(Register), new RegisterResponseDto(result.AccountId, true));
+            return CreatedAtAction(nameof(Register), new RegisterResponseDto(result.AccountId, result.IsEmailVerificationRequired));
         }
 
         [HttpGet("signin")]
-        public async Task<IActionResult> SignIn()
+        public async Task<IActionResult> SignIn([FromBody] SignInRequestDto request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var command = new SignInCommand(
+                request.Email,
+                request.Password);
+            
+            var result = await _signInHandler.HandleAsync(command, cancellationToken);
+
+            return Ok(result);
         }
     }
 }
