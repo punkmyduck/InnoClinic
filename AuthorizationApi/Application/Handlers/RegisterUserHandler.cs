@@ -67,8 +67,8 @@ namespace AuthorizationApi.Application.Handlers
 
             //Добавить вызов метода отдельного класса для отправки кода на почту
 
-            _accountRepository.Add(newAccount, cancellationToken);
-            _emailVerificationTokenRepository.Add(emailVerificationToken, cancellationToken);
+            _accountRepository.Add(newAccount);
+            _emailVerificationTokenRepository.Add(emailVerificationToken);
 
             await _unitOfWork.CommitAsync(cancellationToken);
 
