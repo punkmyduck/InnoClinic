@@ -1,4 +1,5 @@
 using AuthorizationApi.Application;
+using AuthorizationApi.Application.Options;
 using AuthorizationApi.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,9 @@ namespace AuthorizationApi
             builder.Services.AddInfrastructureLayer();
             //Application Layer
             builder.Services.AddApplicationLayer();
+            //Options
+            builder.Services.Configure<JwtOptions>(
+                builder.Configuration.GetSection("JwtOptions"));
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

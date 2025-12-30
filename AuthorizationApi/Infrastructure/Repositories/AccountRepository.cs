@@ -13,11 +13,10 @@ namespace AuthorizationApi.Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task AddAsync(Account account, CancellationToken cancellationToken)
+        public void Add(Account account)
         {
             var entity = AccountMapper.ToEntity(account);
             _context.Accounts.Add(entity);
-            await Task.CompletedTask;
         }
 
         public async Task<bool> ExistsByEmailAsync(Email email, CancellationToken cancellationToken)

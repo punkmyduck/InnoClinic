@@ -4,6 +4,6 @@ namespace AuthorizationApi.Application.Interfaces
 {
     public interface IEmailVerificationTokenRepository
     {
-        Task AddAsync(EmailVerificationToken token, CancellationToken cancellationToken);
+        void Add(EmailVerificationToken token);
     }
 }
