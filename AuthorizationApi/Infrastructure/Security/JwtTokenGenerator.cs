@@ -1,7 +1,6 @@
 ﻿using AuthorizationApi.Application.Interfaces;
 using AuthorizationApi.Application.Options;
 using AuthorizationApi.Application.ValueObjects;
-using AuthorizationApi.Domain.ValueObjects;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
