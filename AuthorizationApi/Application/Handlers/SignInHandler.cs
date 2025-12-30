@@ -4,9 +4,9 @@ using AuthorizationApi.Application.Exceptions;
 using AuthorizationApi.Application.Interfaces;
 using AuthorizationApi.Application.Options;
 using AuthorizationApi.Application.Results;
+using AuthorizationApi.Application.Secutiry;
 using AuthorizationApi.Domain.Models;
 using AuthorizationApi.Domain.ValueObjects;
-using AuthorizationApi.Infrastructure.Security;
 using Microsoft.Extensions.Options;
 
 namespace AuthorizationApi.Application.Handlers

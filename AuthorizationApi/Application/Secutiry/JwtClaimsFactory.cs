@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace AuthorizationApi.Infrastructure.Security
+namespace AuthorizationApi.Application.Secutiry
 {
     public static class JwtClaimsFactory
     {
