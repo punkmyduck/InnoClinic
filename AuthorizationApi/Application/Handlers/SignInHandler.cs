@@ -71,7 +71,7 @@ namespace AuthorizationApi.Application.Handlers
             try
             {
                 await _refreshTokenRepository
-                    .RevokeAllActiveByAccoundIdAsync(account.Id, cancellationToken);
+                    .RevokeAllActiveByAccountIdAsync(account.Id, cancellationToken);
 
                 _refreshTokenRepository.Add(refreshToken);
 

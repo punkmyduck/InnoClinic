@@ -6,7 +6,7 @@ namespace AuthorizationApi.Application.Interfaces
     public interface IRefreshTokenRepository
     {
         void Add(RefreshToken refreshToken);
-        Task RevokeAllActiveByAccoundIdAsync(AccountId accoundId, CancellationToken cancellationToken);
+        Task RevokeAllActiveByAccountIdAsync(AccountId accoundId, CancellationToken cancellationToken);
         Task<RefreshToken?> GetTokenByUserIdAsync(AccountId accoundId, CancellationToken cancellationToken);
     }
 }

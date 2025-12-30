@@ -28,7 +28,7 @@ namespace AuthorizationApi.Infrastructure.Repositories
             return RefreshTokenMapper.ToDomain(entity);
         }
 
-        public async Task RevokeAllActiveByAccoundIdAsync(AccountId accoundId, CancellationToken cancellationToken)
+        public async Task RevokeAllActiveByAccountIdAsync(AccountId accoundId, CancellationToken cancellationToken)
         {
             await _context.RefreshTokens
                 .Where(r => 
