@@ -43,11 +43,11 @@ namespace AuthorizationApi.Application.Handlers
             var account = await _accountRepository.GetByEmailAsync(email, cancellationToken);
             if (account == null) return new SignInCommandResult(false);
 
-            if (!account.IsEmailVerified)
-                throw new EmailIsNotVerifiedException("Email requires verification before logging in.");
-
             if (!_passwordHasher.VerifyPassword(command.Password, account.PasswordHash.Value))
                 return new SignInCommandResult(false);
+
+            if (!account.IsEmailVerified)
+                throw new EmailIsNotVerifiedException("Email requires verification before logging in.");
 
             DateTime now = DateTime.UtcNow;
 
