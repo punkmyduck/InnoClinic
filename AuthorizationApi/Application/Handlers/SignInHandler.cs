@@ -18,13 +18,15 @@ namespace AuthorizationApi.Application.Handlers
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ITokenHashGenerator _tokenHashGenerator;
         public SignInHandler(
             IAccountRepository accountRepository,
             IPasswordHasher passwordHasher,
             JwtOptions options,
             IJwtTokenGenerator jwtTokenGenerator,
             IRefreshTokenRepository refreshTokenRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            ITokenHashGenerator tokenHashGenerator)
         {
             _accountRepository = accountRepository;
             _passwordHasher = passwordHasher;
@@ -32,6 +34,7 @@ namespace AuthorizationApi.Application.Handlers
             _jwtTokenGenerator = jwtTokenGenerator;
             _refreshTokenRepository = refreshTokenRepository;
             _unitOfWork = unitOfWork;
+            _tokenHashGenerator = tokenHashGenerator;
         }
         public async Task<SignInCommandResult> HandleAsync(SignInCommand command, CancellationToken cancellationToken)
         {
@@ -56,7 +59,7 @@ namespace AuthorizationApi.Application.Handlers
             var refreshToken = RefreshToken.CreateToken(
                 new RefreshTokenId(Guid.NewGuid()),
                 account.Id,
-                new TokenHash(generatedRefreshToken.token),
+                TokenHash.FromRaw(generatedRefreshToken.token, _tokenHashGenerator),
                 generatedRefreshToken.expiresAt);
 
             await _refreshTokenRepository.AddAsync(refreshToken, cancellationToken);
