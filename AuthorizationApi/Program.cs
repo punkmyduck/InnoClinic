@@ -46,6 +46,7 @@ namespace AuthorizationApi
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
