@@ -25,6 +25,16 @@ namespace AuthorizationApi.Infrastructure.Repositories
                 .AnyAsync(x => x.Email == email.Value, cancellationToken);
         }
 
+        public async Task<Account?> GetByAccountIdAsync(AccountId accoundId, CancellationToken cancellationToken)
+        {
+            var account = await _context.Accounts
+                .FirstOrDefaultAsync(a => a.Id == accoundId.Value);
+
+            if (account is null) return null;
+
+            return AccountMapper.ToDomain(account);
+        }
+
         public async Task<Account?> GetByEmailAsync(Email email, CancellationToken cancellationToken)
         {
             var entity = await _context.Accounts
