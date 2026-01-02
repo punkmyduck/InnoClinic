@@ -42,23 +42,24 @@ namespace AuthorizationApi.Application.Handlers
         }
         public async Task<SignInCommandResult> HandleAsync(SignInCommand command, CancellationToken cancellationToken)
         {
-            Email email = new Email(command.Email);
+            DateTime now = DateTime.UtcNow;
 
+            //1. Account finding by email
+            Email email = new Email(command.Email);
             var account = await _accountRepository.GetByEmailAsync(email, cancellationToken);
             if (account == null) return new SignInCommandResult(false);
 
+            //2. Account verification
             if (!_passwordHasher.VerifyPassword(command.Password, account.PasswordHash.Value))
                 return new SignInCommandResult(false);
-
             if (!account.IsEmailVerified)
                 throw new EmailIsNotVerifiedException("Email requires verification before logging in.");
 
-            DateTime now = DateTime.UtcNow;
-
+            //3. Access token generation
             var claims = JwtClaimsFactory.Create(account, _options.Issuer);
+            var accessToken = _jwtTokenGenerator.GenerateAccessToken(claims, now.AddMinutes(_options.LifeTimeInMinutes));
 
-            var accessToken = _jwtTokenGenerator.GenerateAccessToken(claims, now.AddMinutes(30));
-
+            //4. RefreshToken generation
             var generatedRefreshToken = _refreshTokenGenerator.GenerateRefreshToken(account.Id, now.AddDays(30));
             var refreshToken = RefreshToken.CreateToken(
                 new RefreshTokenId(Guid.NewGuid()),
@@ -66,7 +67,7 @@ namespace AuthorizationApi.Application.Handlers
                 TokenHash.FromRaw(generatedRefreshToken.token, _tokenHashGenerator),
                 generatedRefreshToken.expiresAt);
 
-
+            //5. Revoke existing tokens and store the new one
             await _unitOfWork.BeginAsync(cancellationToken);
             try
             {

@@ -19,25 +19,35 @@ namespace AuthorizationApi.Infrastructure.Repositories
             _context.RefreshTokens.Add(entity);
         }
 
-        public async Task<RefreshToken?> GetTokenByUserIdAsync(AccountId accoundId, CancellationToken cancellationToken)
-        {
-            var entity = await _context.RefreshTokens
-                .AsNoTracking()
-                .FirstOrDefaultAsync(r => r.AccountId == accoundId.Value && r.IsRevoked == false && r.ExpiresAt >= DateTime.UtcNow);
-            if (entity is null) return null;
-            return RefreshTokenMapper.ToDomain(entity);
-        }
-
         public async Task RevokeAllActiveByAccountIdAsync(AccountId accoundId, CancellationToken cancellationToken)
         {
             await _context.RefreshTokens
-                .Where(r => 
-                    r.AccountId == accoundId.Value 
-                    && r.IsRevoked == false 
+                .Where(r =>
+                    r.AccountId == accoundId.Value
+                    && r.IsRevoked == false
                     && r.ExpiresAt > DateTime.UtcNow)
-                .ExecuteUpdateAsync(s => 
+                .ExecuteUpdateAsync(s =>
                     s.SetProperty(r => r.IsRevoked, true),
                     cancellationToken);
+        }
+
+        public async Task<RefreshToken?> GetTokenByHash(TokenHash tokenHash, CancellationToken cancellationToken)
+        {
+            var token = await _context.RefreshTokens
+                .AsNoTracking()
+                .FirstOrDefaultAsync(r => r.TokenHash == tokenHash.Value, cancellationToken);
+
+            if (token is null) return null;
+
+            return RefreshTokenMapper.ToDomain(token);
+        }
+
+        public void Update(RefreshToken token)
+        {
+            _context.RefreshTokens
+                .Where(r => r.Id == token.Id.Value)
+                .ExecuteUpdate(s =>
+                    s.SetProperty(r => r.IsRevoked, token.IsRevoked));
         }
     }
 }

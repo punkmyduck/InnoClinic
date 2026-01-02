@@ -7,6 +7,7 @@ namespace AuthorizationApi.Application.Interfaces
     {
         void Add(RefreshToken refreshToken);
         Task RevokeAllActiveByAccountIdAsync(AccountId accoundId, CancellationToken cancellationToken);
-        Task<RefreshToken?> GetTokenByUserIdAsync(AccountId accoundId, CancellationToken cancellationToken);
+        void Update(RefreshToken token);
+        Task<RefreshToken?> GetTokenByHash(TokenHash tokenHash, CancellationToken cancellationToken);
     }
 }
