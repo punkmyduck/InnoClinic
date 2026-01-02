@@ -57,7 +57,7 @@ namespace AuthorizationApi.Application.Handlers
 
             var claims = JwtClaimsFactory.Create(account, _options.Issuer);
 
-            var accessToken = _jwtTokenGenerator.GenerateAccessToken(claims, now.AddMinutes(30));
+            var accessToken = _jwtTokenGenerator.GenerateAccessToken(claims, now.AddMinutes(_options.LifeTimeInMinutes));
 
             var generatedRefreshToken = _refreshTokenGenerator.GenerateRefreshToken(account.Id, now.AddDays(30));
             var refreshToken = RefreshToken.CreateToken(
