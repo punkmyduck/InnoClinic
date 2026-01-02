@@ -24,6 +24,12 @@ namespace AuthorizationApi.Application
                     SignInCommand,
                     SignInCommandResult>,
                 SignInHandler>();
+
+            services.AddScoped<
+                ICommandHandler<
+                    RefreshCommand,
+                    RefreshCommandResult>,
+                RefreshHandler>();
         }
 
         public static void AddAuthenticationLayer(this IServiceCollection services, JwtOptions jwtOptions)
